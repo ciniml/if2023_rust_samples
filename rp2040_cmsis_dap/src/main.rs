@@ -19,6 +19,8 @@
 
 mod cmsis_dap;
 use cmsis_dap::CmsisDapInterface;
+mod swdio;
+use swdio::SwdIo;
 
 use hal::pac;
 use panic_halt as _;

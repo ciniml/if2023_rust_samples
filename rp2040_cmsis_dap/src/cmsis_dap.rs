@@ -343,3 +343,12 @@ const fn u32_lo(v: u32) -> u16 {
 const fn u32_hi(v: u32) -> u16 {
     (v >> 16) as u16
 }
+
+#[derive(Debug, PartialEq)]
+pub enum DapError {
+    InvalidCommand,
+    InvalidDapInfoId,
+    SwdError(u8),
+    InternalError,
+    ExceedRetryCount,
+}
