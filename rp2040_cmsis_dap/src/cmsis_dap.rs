@@ -78,13 +78,15 @@ impl<B: UsbBus> CmsisDapInterface<'_, B> {
         let mut response_length = 0;
         {
             let mut response = &mut self.response_buffer[..];
+            // ホストからパケット受信
             let mut request_buffer = [0u8; 64];
             let request_length = self.out_ep.read(&mut request_buffer)?;
             let mut request = &request_buffer[..request_length];
             while request.len() > 0 {
                 match request[0] {
-                    0x00 => {
+                    0x00 => {   // DAP_Infoコマンド
                         if request.len() >= 2 {
+                            // ID
                             let response_bytes = match request[1] {
                                 0x01 => "vendor".as_bytes(),    // ベンダー名
                                 0x02 => "product".as_bytes(),   // プロダクト名
@@ -115,11 +117,10 @@ impl<B: UsbBus> CmsisDapInterface<'_, B> {
                 }
             }
         }
-        if response_length > 0 {
-            if let Err(_) = self.in_ep.write(&self.response_buffer[..response_length]) {
-                // 送信できなかったので送信まち状態とする
-                self.pending_response_bytes = Some(response_length);
-            }
+        
+        if let Err(_) = self.in_ep.write(&self.response_buffer[..response_length]) {
+            // 送信できなかったので送信まち状態とする
+            self.pending_response_bytes = Some(response_length);
         }
         Ok(())
     }
