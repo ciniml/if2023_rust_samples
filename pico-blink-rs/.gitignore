@@ -1,0 +1,4 @@
+target
+Cargo.lock
+rp2040.svd
+.vscode/.cortex-debug.*

@@ -1,0 +1,31 @@
+[default.probe]
+usb_vid = "6666"
+usb_pid = "4444"
+serial = "raspberry-pi-pico-swd"
+protocol = "Swd"
+
+[default.flashing]
+enabled = true
+
+[default.reset]
+enabled = true
+halt_afterwards = false
+
+[default.general]
+chip = "rp2040"
+chip_descriptions = []
+log_level = "WARN"
+connect_under_reset = false
+
+[default.rtt]
+enabled = false
+channels = [
+    { up = 0, down = 0, name = "default", up_mode = "BlockIfFull", format = "String" },
+]
+timeout = 3000
+show_timestamps = true
+log_enabled = false
+
+[default.gdb]
+enabled = true
+gdb_connection_string = "127.0.0.1:1337"

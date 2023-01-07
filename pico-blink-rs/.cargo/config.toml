@@ -1,0 +1,19 @@
+[build]
+target = "thumbv6m-none-eabi"
+
+[target.thumbv6m-none-eabi]
+#runner = "elf2uf2-rs -d"
+#runner = "picotool load -x -t elf"
+runner = "probe-run --probe raspberry-pi-pico-swd --chip RP2040"
+rustflags = [
+  "-C", "link-arg=-Tlink.x", "-C", "link-arg=--nmagic",
+]
+
+[profile.dev]
+codegen-units = 1
+debug = 1
+debug-assertions = true # !
+incremental = false
+lto = "fat"
+opt-level = 'z' # !
+overflow-checks = false
